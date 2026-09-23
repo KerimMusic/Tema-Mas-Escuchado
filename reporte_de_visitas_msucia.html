@@ -1,0 +1,1850 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Visitas Kerim Music+</title>
+    <style>
+        /* Reset básico */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+            transition: background-color 0.8s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            background-color: #000000;
+            padding-top: 40px;
+        }
+
+        .container {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(20, 20, 20, 0.9);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-radius: 40px;
+            padding: 30px 25px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8), 0 8px 20px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .titulo {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.8rem;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.06);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .titulo span {
+            color: #ffffff;
+        }
+        .total-global {
+            font-size: 1rem;
+            font-weight: 400;
+            background: rgba(255, 255, 255, 0.06);
+            padding: 4px 16px;
+            border-radius: 40px;
+            color: #888888;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .total-global .numero {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        /* ---------- BUSCADOR ---------- */
+        .buscador-wrapper {
+            position: relative;
+            margin: 16px 0 20px 0;
+        }
+
+        .buscador-input {
+            width: 100%;
+            padding: 14px 20px;
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.06);
+            backdrop-filter: blur(4px);
+            color: #ffffff;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s, box-shadow 0.3s;
+        }
+        .buscador-input::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        .buscador-input:focus {
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Lista de sugerencias */
+        .sugerencias {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            right: 0;
+            background: #1a1a1a;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            padding: 6px 0;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+        }
+        .sugerencias.visible {
+            display: block;
+        }
+        .sugerencia-item {
+            padding: 12px 20px;
+            color: #cccccc;
+            cursor: pointer;
+            transition: background 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .sugerencia-item:hover {
+            background: rgba(255, 255, 255, 0.06);
+        }
+        .sugerencia-item img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            object-fit: cover;
+            background: #1a1a1a;
+        }
+
+        /* ---------- PERFIL DEL ARTISTA ---------- */
+        .perfil-artista {
+            display: none;
+            margin: 20px 0 24px 0;
+            padding: 20px 24px;
+            background: #1a1a1a;
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            animation: fadeSlideUp 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .perfil-artista.visible {
+            display: block;
+        }
+
+        @keyframes fadeSlideUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px) scale(0.96);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .perfil-header {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            margin-bottom: 16px;
+        }
+        .perfil-imagen {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            background: #1a1a1a;
+        }
+        .perfil-nombre {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        .perfil-total {
+            font-size: 1.2rem;
+            color: #888888;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+        }
+        .perfil-total .numero {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .perfil-lista {
+            margin-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 16px;
+        }
+        .perfil-lista-titulo {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #888888;
+            letter-spacing: 0.02em;
+            margin-bottom: 12px;
+        }
+        .perfil-cancion {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            color: #cccccc;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .perfil-cancion:last-child {
+            border-bottom: none;
+        }
+        .perfil-cancion-nombre {
+            font-weight: 500;
+        }
+        .perfil-cancion-repros {
+            color: #888888;
+        }
+
+        /* ---------- TARJETA DE ÁLBUM DESTACADO ---------- */
+        .destacado-wrapper {
+            display: none;
+            margin: 16px 0 4px 0;
+            padding: 0 4px;
+        }
+        .destacado-wrapper.visible {
+            display: block;
+            animation: fadeSlideUp 0.6s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        .destacado-card {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            background: #1a1a1a;
+            padding: 18px 24px;
+            border-radius: 24px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5), 0 2px 8px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .destacado-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        .destacado-imagen {
+            width: 80px;
+            height: 80px;
+            border-radius: 16px;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+            background: #000000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .destacado-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .destacado-etiqueta {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888888;
+            background: rgba(255, 255, 255, 0.06);
+            display: inline-block;
+            padding: 2px 12px;
+            border-radius: 20px;
+            width: fit-content;
+        }
+
+        .destacado-nombre {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .destacado-visitas {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #888888;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .destacado-visitas .numero {
+            color: #ffffff;
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        .destacado-badge {
+            background: linear-gradient(135deg, #cccccc, #888888);
+            color: #000000;
+            font-weight: 700;
+            font-size: 0.7rem;
+            padding: 4px 12px;
+            border-radius: 30px;
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            box-shadow: 0 2px 8px rgba(255, 255, 255, 0.1);
+        }
+
+        /* ---------- BOTÓN TOGGLE ---------- */
+        .toggle-button {
+            display: block;
+            margin: 16px auto 12px auto;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 60px;
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .toggle-button:hover {
+            background: rgba(255, 255, 255, 0.14);
+            transform: scale(1.02);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+        }
+        .toggle-button:active {
+            transform: scale(0.97);
+        }
+        .toggle-button .flecha {
+            display: inline-block;
+            transition: transform 0.3s ease;
+        }
+        .toggle-button .flecha.abajo {
+            transform: rotate(0deg);
+        }
+        .toggle-button .flecha.arriba {
+            transform: rotate(180deg);
+        }
+
+        /* ---------- LISTA DE TEMAS (wrapper) ---------- */
+        .lista-wrapper {
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: max-height 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+                        opacity 0.4s ease,
+                        transform 0.4s ease;
+            margin-top: 4px;
+        }
+        .lista-wrapper.abierto {
+            max-height: 10000px;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ---------- Tarjetas de usuarios ---------- */
+        .usuario-card {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #1a1a1a;
+            padding: 16px 22px;
+            border-radius: 60px;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.2s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(4px);
+            cursor: pointer;
+        }
+        .usuario-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .usuario-card img {
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            flex-shrink: 0;
+            background: #1a1a1a;
+        }
+
+        .info {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex: 1;
+            flex-wrap: wrap;
+            gap: 8px 12px;
+        }
+
+        .nombre {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #ffffff;
+            letter-spacing: -0.3px;
+            word-break: break-word;
+        }
+
+        .contador {
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: #000000;
+            padding: 0 18px;
+            border-radius: 40px;
+            line-height: 1.5;
+            min-width: 70px;
+            text-align: center;
+            transition: background 0.2s;
+        }
+        .usuario-card:hover .contador {
+            background: #1a1a1a;
+        }
+
+        .contador .numero {
+            color: #ffffff;
+        }
+
+        /* ---------- INSIGNIAS DE CLASIFICACIÓN ---------- */
+        .insignia {
+            display: none;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 4px 14px;
+            border-radius: 30px;
+            white-space: nowrap;
+            letter-spacing: 0.02em;
+            background: #2a2a2a;
+            color: #888888;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-transform: uppercase;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .insignia.visible {
+            display: inline-block;
+        }
+
+        .insignia.kerim {
+            background: linear-gradient(135deg, #e0e0e0, #aaaaaa);
+            color: #000000;
+            border-color: #cccccc;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+        }
+        .insignia.tema-plus {
+            background: linear-gradient(135deg, #888888, #555555);
+            color: #ffffff;
+            border-color: #777777;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+        .insignia.mas-escuchado {
+            background: linear-gradient(135deg, #444444, #222222);
+            color: #ffffff;
+            border-color: #444444;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
+        }
+
+        /* ========== NUEVOS ESTILOS PARA CARRUSEL Y CUADRÍCULA ========== */
+        .carrusel-section {
+            display: none;
+            margin: 20px 0 10px;
+        }
+        .carrusel-section.visible {
+            display: block;
+        }
+
+        .carrusel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .carrusel-titulo {
+            color: #ffffff;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+        .carrusel-ver-todos {
+            color: #888888;
+            cursor: pointer;
+            font-size: 0.9rem;
+            text-decoration: underline;
+            transition: color 0.2s;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .carrusel-ver-todos:hover {
+            color: #ffffff;
+        }
+
+        .carrusel-container {
+            display: flex;
+            overflow-x: auto;
+            gap: 16px;
+            padding: 8px 4px 16px;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255, 255, 255, 0.15) transparent;
+        }
+        .carrusel-container::-webkit-scrollbar {
+            height: 4px;
+        }
+        .carrusel-container::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+        }
+
+        .carrusel-item {
+            flex: 0 0 160px;
+            scroll-snap-align: start;
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .carrusel-item:hover {
+            transform: translateY(-4px);
+        }
+        .carrusel-item img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #000000;
+            margin-bottom: 8px;
+        }
+        .carrusel-item .titulo {
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 0.9rem;
+            line-height: 1.2;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        .carrusel-item .artista {
+            font-size: 0.75rem;
+            color: #888888;
+            margin-bottom: 4px;
+        }
+        .carrusel-item .reproducciones {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .carrusel-item .fecha-hora {
+            font-size: 0.65rem;
+            color: #666666;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .carrusel-item .fecha-hora .reloj-icono {
+            font-size: 0.8rem;
+        }
+
+        /* ---------- MODAL CUADRÍCULA ---------- */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            padding: 20px;
+            overflow-y: auto;
+            justify-content: center;
+        }
+        .modal-overlay.visible {
+            display: flex;
+        }
+        .modal-contenido {
+            max-width: 1200px;
+            width: 100%;
+            margin: auto;
+            position: relative;
+            background: #000000;
+            border-radius: 30px;
+            padding: 30px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9);
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+        .modal-cerrar {
+            position: sticky;
+            top: 0;
+            float: right;
+            background: rgba(255, 255, 255, 0.08);
+            border: none;
+            color: #ffffff;
+            font-size: 2rem;
+            cursor: pointer;
+            padding: 6px 16px;
+            border-radius: 40px;
+            transition: background 0.2s;
+            line-height: 1;
+        }
+        .modal-cerrar:hover {
+            background: rgba(255, 255, 255, 0.16);
+        }
+        .modal-titulo {
+            color: #ffffff;
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            margin-top: 0;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 20px;
+        }
+        .grid-item {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 14px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            transition: transform 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .grid-item:hover {
+            transform: translateY(-4px);
+        }
+        .grid-item img {
+            width: 100%;
+            aspect-ratio: 1/1;
+            object-fit: cover;
+            border-radius: 12px;
+            background: #000000;
+            margin-bottom: 8px;
+        }
+        .grid-item .titulo {
+            font-weight: 600;
+            color: #ffffff;
+            font-size: 0.9rem;
+            line-height: 1.2;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+        .grid-item .artista {
+            font-size: 0.75rem;
+            color: #888888;
+            margin-bottom: 4px;
+        }
+        .grid-item .reproducciones {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #ffffff;
+        }
+        .grid-item .fecha-hora {
+            font-size: 0.65rem;
+            color: #666666;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            margin-top: 6px;
+        }
+        .grid-item .fecha-hora .reloj-icono {
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 20px 15px;
+            }
+            .usuario-card {
+                padding: 12px 16px;
+                border-radius: 40px;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+            .usuario-card img {
+                width: 44px;
+                height: 44px;
+            }
+            .nombre {
+                font-size: 1.1rem;
+            }
+            .contador {
+                font-size: 1.6rem;
+                min-width: 55px;
+                padding: 0 10px;
+            }
+            .titulo {
+                font-size: 1.4rem;
+                flex-direction: column;
+                gap: 6px;
+            }
+            .total-global {
+                font-size: 0.85rem;
+            }
+            .info {
+                gap: 6px;
+            }
+            .insignia {
+                font-size: 0.65rem;
+                padding: 2px 10px;
+            }
+
+            .destacado-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                padding: 20px 16px;
+                gap: 14px;
+            }
+            .destacado-imagen {
+                width: 100px;
+                height: 100px;
+                border-radius: 20px;
+            }
+            .destacado-nombre {
+                font-size: 1.4rem;
+                white-space: normal;
+            }
+            .destacado-info {
+                align-items: center;
+            }
+            .destacado-visitas .numero {
+                font-size: 1.4rem;
+            }
+
+            .perfil-header {
+                flex-wrap: wrap;
+                justify-content: center;
+                text-align: center;
+            }
+            .perfil-nombre {
+                font-size: 1.4rem;
+            }
+            .perfil-total .numero {
+                font-size: 1.6rem;
+            }
+
+            .toggle-button {
+                font-size: 0.9rem;
+                padding: 10px 20px;
+                margin: 12px auto 8px auto;
+            }
+
+            .carrusel-item {
+                flex: 0 0 130px;
+                padding: 10px;
+            }
+            .grid-container {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 14px;
+            }
+            .modal-contenido {
+                padding: 20px 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="appContainer">
+        <div class="titulo">
+            <span>Kerim Music+</span>
+        </div>
+
+        <!-- BUSCADOR -->
+        <div class="buscador-wrapper">
+            <input type="text" class="buscador-input" id="buscadorInput" placeholder="Buscar artista (ej. Emsek, J Vazquez, Aiciber)" autocomplete="off" />
+            <div class="sugerencias" id="sugerenciasLista"></div>
+        </div>
+
+        <!-- PERFIL DEL ARTISTA -->
+        <div class="perfil-artista" id="perfilArtista">
+            <div class="perfil-header">
+                <img class="perfil-imagen" id="perfilImagen" src="" alt="Artista" />
+                <div>
+                    <div class="perfil-nombre" id="perfilNombre">—</div>
+                    <div class="perfil-total">
+                        <span>Total de reproducciones:</span>
+                        <span class="numero" id="perfilTotal">0</span>
+                    </div>
+                </div>
+            </div>
+            <div class="perfil-lista">
+                <div class="perfil-lista-titulo">Canciones</div>
+                <div id="perfilCanciones"></div>
+            </div>
+        </div>
+
+        <!-- Tarjeta de álbum destacado (tema más escuchado) -->
+        <div class="destacado-wrapper" id="destacadoWrapper">
+            <div class="destacado-card">
+                <img class="destacado-imagen" id="destacadoImagen" src="" alt="Portada destacada" />
+                <div class="destacado-info">
+                    <span class="destacado-etiqueta">🎼 Tema más escuchado</span>
+                    <div class="destacado-nombre" id="destacadoArtista">—</div>
+                    <div class="destacado-visitas">
+                        <span></span>
+                        <span class="numero" id="destacadoVisitas">0</span>
+                        <span>visitas</span>
+                        <span class="destacado-badge">🔥 TOP</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== NUEVA SECCIÓN CARRUSEL TEMAS MÁS ESCUCHADOS ========== -->
+        <div class="carrusel-section" id="carruselSection">
+            <div class="carrusel-header">
+                <span class="carrusel-titulo">🎧 Temas más escuchados</span>
+                <button class="carrusel-ver-todos" id="verTodosLink">Mostrar todos los temas más escuchados</button>
+            </div>
+            <div class="carrusel-container" id="carruselContainer">
+                <!-- Generado dinámicamente -->
+            </div>
+        </div>
+
+        <!-- BOTÓN MOSTRAR / OCULTAR TODOS LOS TEMAS -->
+        <button class="toggle-button" id="toggleButton">
+            <span>Mostrar todos los temas</span>
+            <span class="flecha abajo" id="flechaToggle">▼</span>
+        </button>
+
+        <!-- LISTA DE TODOS LOS TEMAS (inicialmente oculta) -->
+        <div class="lista-wrapper" id="listaWrapper">
+            <div id="tarjetasContainer"></div>
+        </div>
+    </div>
+
+    <!-- ========== MODAL PARA CUADRÍCULA DE TODOS LOS TEMAS MÁS ESCUCHADOS ========== -->
+    <div class="modal-overlay" id="modalTodos">
+        <div class="modal-contenido">
+            <button class="modal-cerrar" id="cerrarModal">✕</button>
+            <h2 class="modal-titulo">Todos los temas más escuchados</h2>
+            <div class="grid-container" id="gridContainer">
+                <!-- Generado dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            onSnapshot
+        } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // ─── CONFIGURACIÓN DE FIREBASE ──────────────────
+        const firebaseConfig = {
+            apiKey: "AIzaSyC5R9mPw1PQMjYIqWpz5w3W7BvGmZV4tX8",
+            authDomain: "kerim-music-a9c46.firebaseapp.com",
+            projectId: "kerim-music-a9c46",
+            storageBucket: "kerim-music-a9c46.firebasestorage.app",
+            messagingSenderId: "103691719997",
+            appId: "1:103691719997:web:da58ff98f78f1b632b19cb"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+        const auth = getAuth(app);
+
+        const CAMPO = "reproducciones";
+
+        // ─── LISTA DE ÁLBUMES (CON ARTISTA NORMALIZADO) ──────
+        const albumes = [
+            //======================Barrio Bajo==================
+            { id: "Se te sube la nota Barrio Bajo", 
+        title: "Se te sube la nota", 
+        artist: "Barrio Bajo", 
+        category: "Rap",
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/zi53xkbpy3ltgf1ztzd62/Se-te-sube-la-nota.png?rlkey=530efmntba6x9g07gra0qm8dr&st=0guanbwd&raw=1',
+        },
+            { id: "Dile Barrio Bajo", 
+        title: "Dile", 
+        artist: "Barrio Bajo", 
+        category: "Rap",
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/qker6uqxmojvnvuuzgzob/Dile.jpg?rlkey=76hsqmpzj3r4ctpexesyehok5&st=offbzalp&raw=1', 
+        },
+        //======================Kerim Msuic==================
+        //=================El placoso de la L=========================
+         { id: "No Te Importo EPDL", 
+        title: "No Te Importo EPDL", 
+        artist: "El placoso de la L", 
+        category: "Rap",
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
+        music: 'https://www.dropbox.com/scl/fi/u81ryisgb72g89ya0md8l/No-Te-Importo-EPDL.wav?rlkey=le8nk4ap3uzoo7uv8yn4yig46&st=ksvr1ckd&raw=1'
+        },
+        { id: "Una Estrella Más EPDL", 
+        title: "Una Estrella Más EPDL", 
+        artist: "El placoso de la L", 
+        category: "Rap",
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
+        music: 'https://www.dropbox.com/scl/fi/xqbo86t3l06pc3xiaekwg/Una-Estrella-M-s-EPDL.wav?rlkey=2dbgpfeogsbwtci26frbvau7p&st=yj9504uy&raw=1'
+        },
+        { id: "Quemen El Toque EPDL", 
+        title: "Qumen el Toque EPDL", 
+        artist: "El placoso de la L", 
+        category: "Rap",
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
+        music: 'https://www.dropbox.com/scl/fi/zmcybg4pe5jdot0nlj1hw/Quemen-El-Toque-EPDL.wav?rlkey=8ea9fwhcc8ydxdpv0cj5v0xvx&st=584gqe3m&raw=1'
+        },
+        { id: "Mi Viejo Me Dijo EPDL", 
+        title: "Mi Viejo Me Dijo EPDL", 
+        artist: "El placoso de la L", 
+        category: "Rap",
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
+        music: 'https://www.dropbox.com/scl/fi/rr0m9gvd0wpdhcvrsjvh8/Mi-Viejo-Me-Dijo-EPDL.wav?rlkey=4lx2qb0thgoxcum0t6z1ud7yh&st=wdn7so5r&raw=1'
+        },
+        { id: "Loco EPDL", 
+        title: "LOCO EPDL", 
+        artist: "El placoso de la L", 
+        category: "Rap",
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
+        music: 'https://www.dropbox.com/scl/fi/addl4wsvy6ez49r30pwwz/Master_L-Klan-Oficial-Loco-Video-Oficial.wav?rlkey=ptxn39acppgeekjfg6x9qtmi3&st=62dp1u6y&raw=1'
+        },
+            //=======================Dany Zm=====================
+        { id: "Dile que tu eres mia Dany Zm", 
+        title: "Dile que tu eres mia", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://i.postimg.cc/wMCFZY9H/Picsart-26-02-15-14-39-19-042.jpg', 
+        },
+        { id: "Hay estare Dany Zm", 
+        title: "Hay estare", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Modo avion Dany Zm", 
+        title: "Modo avion", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Bailalo Dany Zm", 
+        title: "Bailalo", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Beyby Dany Zm", 
+        title: "Beyby", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Corito sano Dany Zm", 
+        title: "Corito sano Dany Zm ft va ft Yerzkor cruz ft Sain Nt", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Especial Dany Zm", 
+        title: "Espacial se acabo cuando", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Tu tiempo se acabo Dany Zm", 
+        title: "Tu tiempo se acabo cuando", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Engaño Dany Zm", 
+        title: "Engaño cuando", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Hasta cuando Dany Zm", 
+        title: "Hasta cuando", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Lluvia Dany Zm", 
+        title: "Lluvia cuento", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Me dejo solo Dany Zm", 
+        title: "Me dejo solo cuento", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Nuestro cuento Dany Zm", 
+        title: "Nuestro cuento", 
+        artist: "Dany Zm", 
+        category: "Rap",
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Vuelve Dany Zm", 
+        title: "Vuelve", 
+        artist: "Dany Zm", 
+        category: "Rap", 
+        coleccion: "Radio_Muisc",
+        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
+        },
+        { id: "Te extraño tanto Dany Zm", 
+        title: "Te extraño tanto", 
+        artist: "Dany Zm", 
+        category: "Rap",
+        coleccion: "Radio_Muisc", 
+        url: 'https://www.dropbox.com/scl/fi/10taifx84l0e4h2y9l2nx/Te-estra-o-tanto.png?rlkey=kp4gp2kp8rhbzsdobyl5tfng6&st=vrnzzymz&raw=1', 
+        },
+            // =============== Aizber (Artista: Aizber) ==============
+            { 
+                id: "Sigo Vivo Aizber",
+                url: 'https://www.dropbox.com/scl/fi/9xqi6k1g5cnbior62dh0l/800x800-7986476-B8AD12F4-560F-4E85-8EE3DD6C45025D0E-0-565367-Picsart260207195632530.jpg?rlkey=zjttay9r0myk8r0h1x2074pnj&st=rqbn5ts8&raw=1',
+                category: 'Rap',
+                album: 'Kerim Music',
+                title: 'Sigo Vivo Aicber',
+                coleccion: "Radio_Muisc",
+                artist: 'Aizber'
+            },
+            { 
+                id: "Recuerdos Aizber",
+                url: 'https://www.dropbox.com/scl/fi/kk1f1fdpsgx7noxb5lly9/800x800-7986476-70C18BD7-1A24-4B1E-9D524972181DB7D1-0-663215-FBIMG17490012695773000x3000.jpg?rlkey=0exgl54ffel1k27ncua1j7kd2&st=xwg464eg&raw=1',
+                category: 'Rap',
+                album: 'Kerim Music',
+                title: 'Recuerdos Aicber',
+                coleccion: "Radio_Muisc",
+                artist: 'Aizber'
+            },
+            // =============== Emsek ==============
+            {
+                id: "Entre tus redes Emsek",
+                nombre: "Entre tus redes",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Entre tus redes Emsek",
+                artist: "Emsek"
+            },
+            {
+                id: "El fin de la historia Emsek",
+                nombre: "El fin de la historia",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "El fin de la historia Emsek",
+                artist: "Emsek"
+            },
+            {
+                id: "En busca de la victoria Emsek",
+                nombre: "En busca de la victoria",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "En busca de la victoria Emsek",
+                artist: "Emsek"
+            },
+            {
+                id: "No fue lo mismo Emsek",
+                nombre: "No fue lo mismo",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "No fue lo mismo Emsek",
+                artist: "Emsek"
+            },
+            {
+                id: "Tus errores Emsek",
+                nombre: "Tus Errores",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Tus errores Emsek",
+                artist: "Emsek"
+            },
+            {
+                id: "Los tiempos cambian Emsek",
+                nombre: "Los tiempos cambian",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Los tiempos cambian Emsek",
+                artist: "Emsek"
+            },
+            {
+                id: "Musa Emsek",
+                nombre: "Musa",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Musa Emsek",
+                artist: "Emsek"
+            },
+            {
+                id: "Dada es sencillo Emsek",
+                nombre: "Nada es sencillo",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Dada es sencillo Emsek",
+                artist: "Emsek"
+            },
+            {
+                id: "Perdoname Esmek",
+                nombre: "Perdoname",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Perdoname Esmek",
+                artist: "Emsek"
+            },
+            {
+                id: "Todo acabo Emsek",
+                nombre: "Todo acabo",
+                imagen: "https://www.dropbox.com/scl/fi/hu6726a9yx9z9c5w2ns0w/Emsek.jpg?rlkey=llo70vmyjg4u9jfhnq6g9tvr8&st=dqvk5v66&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Todo acabo Emsek",
+                artist: "Emsek"
+            },
+            // =============== JVazquez ==============
+            { 
+        id: "BABY J Vazquez",
+        url: 'https://www.dropbox.com/scl/fi/kfrpspuowtzrkjvwe2kxa/800x800-7986476-EBBCC76E-8564-423A-9B173657F2C27F7C-0-563472-Picsart250629201208586.jpg?rlkey=qglu4yfiepshx5p119dk647du&st=84qnuspr&raw=1',
+        coleccion: "Radio_Muisc",
+        category: 'Reggeton',
+        album: '2019',
+        title: 'BABY J Vazquez',
+        artist: 'J Vazquez'
+            },
+            {
+                id: "jvazquez12",
+                nombre: "Una Aventura J Vazquez",
+                imagen: "https://www.dropbox.com/scl/fi/7pxyk1hvrgtdl9fy94alm/J-Vazqeuz-Album-2022.jpg?rlkey=sfb91d32144hgoijxhf0eqbhz&st=u0jdv66d&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Una Aventura J Vazquez",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez11",
+                nombre: "Me vuelve loco J Vazquez",
+                imagen: "https://www.dropbox.com/scl/fi/7pxyk1hvrgtdl9fy94alm/J-Vazqeuz-Album-2022.jpg?rlkey=sfb91d32144hgoijxhf0eqbhz&st=u0jdv66d&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Me vuelve loco J Vazquez",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez10",
+                nombre: "Obsesion J Vazquez",
+                imagen: "https://www.dropbox.com/scl/fi/7pxyk1hvrgtdl9fy94alm/J-Vazqeuz-Album-2022.jpg?rlkey=sfb91d32144hgoijxhf0eqbhz&st=u0jdv66d&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Obsesion J Vazquez",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez9",
+                nombre: "Que esta pasando J Vazquez",
+                imagen: "https://www.dropbox.com/scl/fi/7pxyk1hvrgtdl9fy94alm/J-Vazqeuz-Album-2022.jpg?rlkey=sfb91d32144hgoijxhf0eqbhz&st=u0jdv66d&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Que esta pasando J Vazquez",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez8",
+                nombre: "Tiempo J Vazquez",
+                imagen: "https://www.dropbox.com/scl/fi/7pxyk1hvrgtdl9fy94alm/J-Vazqeuz-Album-2022.jpg?rlkey=sfb91d32144hgoijxhf0eqbhz&st=u0jdv66d&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Tiempo J Vazquez",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez7",
+                nombre: "Volver J Vazquez",
+                imagen: "https://www.dropbox.com/scl/fi/7pxyk1hvrgtdl9fy94alm/J-Vazqeuz-Album-2022.jpg?rlkey=sfb91d32144hgoijxhf0eqbhz&st=u0jdv66d&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Volver",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez6",
+                nombre: "Te estoy llamando J Vazquez",
+                imagen: "https://www.dropbox.com/scl/fi/kgnxbl0mdp3q2uivbi4et/800x800-7986476-0F948044-9801-4FC9-8EFF36DDC1873148-0-3542185-Teestoyllamando.jpg?rlkey=jki22g8n7mq0b7ufv138n4wsn&st=10uw8nqx&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Te estoy llamando J Vazquez",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez5",
+                nombre: "Foto J Vazquez",
+                imagen: "https://www.dropbox.com/scl/fi/7pxyk1hvrgtdl9fy94alm/J-Vazqeuz-Album-2022.jpg?rlkey=sfb91d32144hgoijxhf0eqbhz&st=k9w3fdxx&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "Foto J Vazquez",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez1",
+                nombre: "pegaoo!",
+                imagen: "https://www.dropbox.com/scl/fi/ofp26lu2vtmkahpv27261/Pegaoo-J-Vazquez.jpg?rlkey=88v0x6qpgrxmpkdvi2bnkl1lq&st=f0ady511&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "pegaoo!",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez3",
+                nombre: "No eres juego de nintendo",
+                imagen: "https://www.dropbox.com/scl/fi/7pxyk1hvrgtdl9fy94alm/J-Vazqeuz-Album-2022.jpg?rlkey=sfb91d32144hgoijxhf0eqbhz&st=u0jdv66d&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "No eres juego de nintendo",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez4",
+                nombre: "El chiris J Vazquez",
+                imagen: "https://www.dropbox.com/scl/fi/w51t3llqpavnpmxxgus83/el-chiris.png?rlkey=leru6o7n7omsn9b455yqcrf4g&st=zv4scg8y&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "El chiris J Vazquez",
+                artist: "J Vazquez"
+            },
+            {
+                id: "jvazquez2",
+                nombre: "14 de febrero",
+                imagen: "https://www.dropbox.com/scl/fi/uwuq0dmdotm4lx00z82r5/800x800-7986476-C4F4AACF-E181-4041-A6075E17315FCA83-0-289400-WhatsAppImage20260206at6.03.47PM.jpg?rlkey=t8wcuqx2xiq5c0bwgtr6dokn3&st=u3gdtb4m&raw=1",
+                coleccion: "Radio_Muisc",
+                documento: "14 de febrero",
+                artist: "J Vazquez"
+            }
+        ];
+
+        // ─── REFERENCIAS Y ELEMENTOS DINÁMICOS ──────────────────────────
+        const tarjetasContainer = document.getElementById('tarjetasContainer');
+        const wrapper = document.getElementById('destacadoWrapper');
+        const imgDestacado = document.getElementById('destacadoImagen');
+        const nombreDestacado = document.getElementById('destacadoArtista');
+        const visitasDestacado = document.getElementById('destacadoVisitas');
+
+        // Elementos del buscador y perfil
+        const buscadorInput = document.getElementById('buscadorInput');
+        const sugerenciasLista = document.getElementById('sugerenciasLista');
+        const perfilArtista = document.getElementById('perfilArtista');
+        const perfilImagen = document.getElementById('perfilImagen');
+        const perfilNombre = document.getElementById('perfilNombre');
+        const perfilTotal = document.getElementById('perfilTotal');
+        const perfilCanciones = document.getElementById('perfilCanciones');
+
+        // Botón toggle y contador global
+        const toggleButton = document.getElementById('toggleButton');
+        const listaWrapper = document.getElementById('listaWrapper');
+        const flechaToggle = document.getElementById('flechaToggle');
+        const totalGlobalSpan = document.getElementById('totalGlobal');
+
+        // ========== NUEVOS ELEMENTOS CARRUSEL Y MODAL ==========
+        const carruselSection = document.getElementById('carruselSection');
+        const carruselContainer = document.getElementById('carruselContainer');
+        const verTodosLink = document.getElementById('verTodosLink');
+        const modalTodos = document.getElementById('modalTodos');
+        const cerrarModal = document.getElementById('cerrarModal');
+        const gridContainer = document.getElementById('gridContainer');
+
+        // ─── TOGGLE MOSTRAR / OCULTAR TODOS LOS TEMAS ──────────────────
+        let listaVisible = false;
+
+        toggleButton.addEventListener('click', () => {
+            listaVisible = !listaVisible;
+            if (listaVisible) {
+                listaWrapper.classList.add('abierto');
+                toggleButton.querySelector('span:first-child').textContent = 'Ocultar todos los temas';
+                flechaToggle.className = 'flecha arriba';
+            } else {
+                listaWrapper.classList.remove('abierto');
+                toggleButton.querySelector('span:first-child').textContent = 'Mostrar todos los temas';
+                flechaToggle.className = 'flecha abajo';
+            }
+        });
+
+        // Objeto para almacenar los valores actuales de cada álbum
+        const valores = {};
+        // Objeto para guardar los spans de cada contador
+        const spans = {};
+        // Objeto para guardar los spans de insignias
+        const insignias = {};
+        // Objeto para guardar las referencias de Firestore
+        const refs = {};
+        // Almacenar los elementos de las tarjetas para reordenar
+        const cardElements = {};
+
+        // ─── MAPA DE ARTISTAS ────────────────────────────────────────────
+        const artistasMap = new Map(); // nombreArtista -> { ids: [], imagen: string }
+
+        albumes.forEach(album => {
+            const artist = album.artist;
+            if (!artist) return;
+            if (!artistasMap.has(artist)) {
+                artistasMap.set(artist, { ids: [], imagen: album.imagen || album.url || '' });
+            }
+            artistasMap.get(artist).ids.push(album.id);
+        });
+
+        // ─── FUNCIONES DEL BUSCADOR ─────────────────────────────────────
+
+        function obtenerSugerencias(texto) {
+            if (!texto.trim()) return [];
+            const lower = texto.toLowerCase().trim();
+            const resultados = [];
+            for (const [nombre, data] of artistasMap.entries()) {
+                if (nombre.toLowerCase().includes(lower)) {
+                    resultados.push({ nombre, imagen: data.imagen });
+                }
+            }
+            return resultados;
+        }
+
+        function mostrarSugerencias(sugerencias) {
+            sugerenciasLista.innerHTML = '';
+            if (sugerencias.length === 0) {
+                sugerenciasLista.classList.remove('visible');
+                return;
+            }
+            sugerencias.forEach(sug => {
+                const item = document.createElement('div');
+                item.className = 'sugerencia-item';
+                const img = document.createElement('img');
+                img.src = sug.imagen || 'https://via.placeholder.com/32';
+                img.alt = sug.nombre;
+                const span = document.createElement('span');
+                span.textContent = sug.nombre;
+                item.appendChild(img);
+                item.appendChild(span);
+                item.addEventListener('click', () => {
+                    mostrarPerfil(sug.nombre);
+                    sugerenciasLista.classList.remove('visible');
+                    buscadorInput.value = sug.nombre;
+                });
+                sugerenciasLista.appendChild(item);
+            });
+            sugerenciasLista.classList.add('visible');
+        }
+
+        function mostrarPerfil(artistaNombre) {
+            const data = artistasMap.get(artistaNombre);
+            if (!data) {
+                perfilArtista.classList.remove('visible');
+                return;
+            }
+            const ids = data.ids;
+            // Obtener la primera imagen del artista (usar la del primer álbum)
+            const primerAlbum = albumes.find(a => a.id === ids[0]);
+            const imagen = primerAlbum ? (primerAlbum.imagen || primerAlbum.url || '') : '';
+
+            perfilImagen.src = imagen || 'https://via.placeholder.com/64';
+            perfilNombre.textContent = artistaNombre;
+            perfilArtista.classList.add('visible');
+
+            // Actualizar total y lista de canciones
+            actualizarPerfil(artistaNombre);
+        }
+
+        function actualizarPerfil(artistaNombre) {
+            const data = artistasMap.get(artistaNombre);
+            if (!data) return;
+            const ids = data.ids;
+            let total = 0;
+            const canciones = [];
+
+            ids.forEach(id => {
+                const valor = valores[id] || 0;
+                total += valor;
+                const album = albumes.find(a => a.id === id);
+                const nombre = album ? (album.nombre || album.title || 'Sin nombre') : 'Sin nombre';
+                canciones.push({ nombre, valor });
+            });
+
+            perfilTotal.textContent = total;
+
+            // Mostrar lista de canciones
+            perfilCanciones.innerHTML = '';
+            canciones.sort((a, b) => b.valor - a.valor);
+            canciones.forEach(c => {
+                const div = document.createElement('div');
+                div.className = 'perfil-cancion';
+                div.innerHTML = `
+                    <span class="perfil-cancion-nombre">${c.nombre}</span>
+                    <span class="perfil-cancion-repros">${c.valor.toLocaleString()}</span>
+                `;
+                perfilCanciones.appendChild(div);
+            });
+        }
+
+        // ─── EVENTOS DEL BUSCADOR ───────────────────────────────────────
+
+        buscadorInput.addEventListener('input', (e) => {
+            const texto = e.target.value;
+            const sugerencias = obtenerSugerencias(texto);
+            mostrarSugerencias(sugerencias);
+            // Si el texto coincide exactamente con un artista, mostrar perfil directamente
+            const exacto = artistasMap.has(texto.trim());
+            if (exacto) {
+                mostrarPerfil(texto.trim());
+                sugerenciasLista.classList.remove('visible');
+            } else {
+                // Si no hay coincidencia exacta, ocultar perfil
+                perfilArtista.classList.remove('visible');
+            }
+        });
+
+        // Cerrar sugerencias al hacer clic fuera
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.buscador-wrapper')) {
+                sugerenciasLista.classList.remove('visible');
+            }
+        });
+
+        // ─── FUNCIÓN PARA OBTENER LA INSIGNIA SEGÚN REPRODUCCIONES ────
+        function obtenerInsignia(reproducciones) {
+            if (reproducciones >= 1000000) {
+                return { texto: 'Kerim Music+', clase: 'kerim' };
+            } else if (reproducciones >= 500000) {
+                return { texto: 'Tema+', clase: 'tema-plus' };
+            } else if (reproducciones >= 100) {
+                return { texto: 'Tema Más Escuchado', clase: 'mas-escuchado' };
+            } else {
+                return null;
+            }
+        }
+
+        // ─── GENERAR HTML DE LAS TARJETAS ──────────────────────────────
+        albumes.forEach(album => {
+            const nombre = album.nombre || album.title || 'Sin nombre';
+            const imagen = album.imagen || album.url || '';
+            const documento = album.documento || album.id;
+
+            const ref = doc(db, album.coleccion, documento);
+            refs[album.id] = ref;
+            valores[album.id] = 0;
+
+            const card = document.createElement('div');
+            card.className = 'usuario-card';
+            card.dataset.id = album.id;
+            card.dataset.artist = album.artist || '';
+
+            const img = document.createElement('img');
+            img.src = imagen;
+            img.alt = nombre;
+
+            const info = document.createElement('div');
+            info.className = 'info';
+
+            const nombreSpan = document.createElement('span');
+            nombreSpan.className = 'nombre';
+            nombreSpan.textContent = nombre;
+
+            const insigniaSpan = document.createElement('span');
+            insigniaSpan.className = 'insignia';
+            insigniaSpan.textContent = '';
+            insigniaSpan.dataset.id = album.id;
+
+            const contadorDiv = document.createElement('span');
+            contadorDiv.className = 'contador';
+            const numeroSpan = document.createElement('span');
+            numeroSpan.className = 'numero';
+            numeroSpan.id = `total-${album.id}`;
+            numeroSpan.textContent = '0';
+            contadorDiv.appendChild(numeroSpan);
+
+            info.appendChild(nombreSpan);
+            info.appendChild(insigniaSpan);
+            info.appendChild(contadorDiv);
+            card.appendChild(img);
+            card.appendChild(info);
+            tarjetasContainer.appendChild(card);
+
+            spans[album.id] = numeroSpan;
+            insignias[album.id] = insigniaSpan;
+            cardElements[album.id] = card;
+
+            // ─── CLIC EN LA TARJETA PARA MOSTRAR PERFIL DEL ARTISTA ──
+            card.addEventListener('click', () => {
+                const artist = album.artist;
+                if (artist && artistasMap.has(artist)) {
+                    mostrarPerfil(artist);
+                    if (listaVisible) {
+                        listaWrapper.classList.remove('abierto');
+                        listaVisible = false;
+                        toggleButton.querySelector('span:first-child').textContent = 'Mostrar todos los temas';
+                        flechaToggle.className = 'flecha abajo';
+                    }
+                    buscadorInput.value = artist;
+                }
+            });
+        });
+
+        // ─── FUNCIONES DEL CONTADOR ──────────────────────────────────────
+
+        async function inicializarDocumento(ref, nombreDoc) {
+            try {
+                const docSnap = await getDoc(ref);
+                if (!docSnap.exists()) {
+                    await setDoc(ref, { [CAMPO]: 0 });
+                    console.log(`📄 Documento ${nombreDoc} creado con valor 0`);
+                } else {
+                    const data = docSnap.data();
+                    if (!(CAMPO in data)) {
+                        await setDoc(ref, { [CAMPO]: 0 }, { merge: true });
+                        console.log(`📄 Campo "${CAMPO}" añadido en ${nombreDoc}`);
+                    }
+                }
+            } catch (error) {
+                console.error(`❌ Error al inicializar ${nombreDoc}:`, error);
+            }
+        }
+
+        function escucharContador(ref, spanElement, insigniaElement, nombreDoc, clave) {
+            return onSnapshot(ref, (docSnap) => {
+                if (docSnap.exists()) {
+                    const valor = docSnap.data()[CAMPO] ?? 0;
+                    spanElement.textContent = valor;
+                    valores[clave] = valor;
+
+                    const badge = obtenerInsignia(valor);
+                    if (badge) {
+                        insigniaElement.textContent = badge.texto;
+                        insigniaElement.className = 'insignia visible ' + badge.clase;
+                    } else {
+                        insigniaElement.className = 'insignia';
+                        insigniaElement.textContent = '';
+                    }
+
+                    actualizarDestacado();
+                    reordenarTarjetas();
+                    actualizarTotalGlobal();
+                    actualizarTemasMasEscuchados(); // <-- NUEVO
+
+                    if (perfilArtista.classList.contains('visible')) {
+                        const artistaActual = perfilNombre.textContent;
+                        const album = albumes.find(a => a.id === clave);
+                        if (album && album.artist === artistaActual) {
+                            actualizarPerfil(artistaActual);
+                        }
+                    }
+                } else {
+                    inicializarDocumento(ref, nombreDoc);
+                }
+            }, (error) => {
+                console.error(`❌ Error en listener de ${nombreDoc}:`, error);
+            });
+        }
+
+        // ─── ACTUALIZAR TARJETA DESTACADA ──────────────────────────────
+
+        function actualizarDestacado() {
+            let maxId = null;
+            let maxValor = -1;
+            for (const [id, valor] of Object.entries(valores)) {
+                if (valor > maxValor) {
+                    maxValor = valor;
+                    maxId = id;
+                }
+            }
+
+            const ganador = albumes.find(a => a.id === maxId);
+            if (ganador && maxValor >= 0) {
+                const nombre = ganador.nombre || ganador.title || 'Sin nombre';
+                const imagen = ganador.imagen || ganador.url || '';
+                imgDestacado.src = imagen;
+                imgDestacado.alt = nombre;
+                nombreDestacado.textContent = nombre;
+                visitasDestacado.textContent = maxValor;
+                wrapper.classList.add('visible');
+            } else {
+                wrapper.classList.remove('visible');
+            }
+        }
+
+        // ─── ACTUALIZAR CONTADOR GLOBAL ─────────────────────────────────
+        function actualizarTotalGlobal() {
+            let total = 0;
+            for (const valor of Object.values(valores)) {
+                total += valor;
+            }
+            totalGlobalSpan.textContent = total;
+        }
+
+        // ─── REORDENAR TARJETAS ──────────────────────────────────────────
+
+        function reordenarTarjetas() {
+            const cards = Array.from(tarjetasContainer.children);
+            cards.sort((a, b) => {
+                const idA = a.dataset.id;
+                const idB = b.dataset.id;
+                return (valores[idB] || 0) - (valores[idA] || 0);
+            });
+            cards.forEach(card => tarjetasContainer.appendChild(card));
+        }
+
+        // ========== NUEVAS FUNCIONES: CARRUSEL Y CUADRÍCULA ==========
+
+        // Obtener lista de temas con insignia "mas-escuchado"
+        function obtenerTemasMasEscuchados() {
+            const resultado = [];
+            for (const [id, valor] of Object.entries(valores)) {
+                const badge = obtenerInsignia(valor);
+                if (badge && badge.clase === 'mas-escuchado') {
+                    const album = albumes.find(a => a.id === id);
+                    if (album) {
+                        resultado.push({
+                            id,
+                            valor,
+                            album,
+                            nombre: album.nombre || album.title || 'Sin nombre',
+                            imagen: album.imagen || album.url || '',
+                            artista: album.artist || 'Desconocido'
+                        });
+                    }
+                }
+            }
+            // Ordenar por reproducciones descendente
+            resultado.sort((a, b) => b.valor - a.valor);
+            return resultado;
+        }
+
+        // Función para crear un elemento de carrusel o cuadrícula
+        function crearItem(tema, tipo) {
+            const div = document.createElement('div');
+            div.className = tipo === 'grid' ? 'grid-item' : 'carrusel-item';
+
+            const img = document.createElement('img');
+            img.src = tema.imagen || 'https://via.placeholder.com/160';
+            img.alt = tema.nombre;
+            div.appendChild(img);
+
+            const titulo = document.createElement('div');
+            titulo.className = 'titulo';
+            titulo.textContent = tema.nombre;
+            div.appendChild(titulo);
+
+            const artista = document.createElement('div');
+            artista.className = 'artista';
+            artista.textContent = tema.artista;
+            div.appendChild(artista);
+
+            const repros = document.createElement('div');
+            repros.className = 'reproducciones';
+            repros.textContent = tema.valor.toLocaleString() + ' reproducciones';
+            div.appendChild(repros);
+
+            const fechaHora = document.createElement('div');
+            fechaHora.className = 'fecha-hora';
+            fechaHora.innerHTML = `<span class="reloj-icono">🕒</span> <span class="fecha-hora-texto">${formatearFechaHora(new Date())}</span>`;
+            div.appendChild(fechaHora);
+
+            return div;
+        }
+
+        // Función para formatear fecha y hora
+        function formatearFechaHora(date) {
+            const dia = String(date.getDate()).padStart(2, '0');
+            const mes = String(date.getMonth() + 1).padStart(2, '0');
+            const año = date.getFullYear();
+            const horas = String(date.getHours()).padStart(2, '0');
+            const minutos = String(date.getMinutes()).padStart(2, '0');
+            const segundos = String(date.getSeconds()).padStart(2, '0');
+            return `${dia}/${mes}/${año} ${horas}:${minutos}:${segundos}`;
+        }
+
+        // Actualizar todos los elementos de fecha/hora (cada segundo)
+        function actualizarFechasHoras() {
+            const ahora = new Date();
+            const texto = formatearFechaHora(ahora);
+            document.querySelectorAll('.fecha-hora-texto').forEach(el => {
+                el.textContent = texto;
+            });
+        }
+
+        // Renderizar carrusel
+        function renderizarCarrusel(temas) {
+            carruselContainer.innerHTML = '';
+            if (temas.length === 0) {
+                carruselSection.classList.remove('visible');
+                return;
+            }
+            carruselSection.classList.add('visible');
+            temas.forEach(tema => {
+                const item = crearItem(tema, 'carrusel');
+                carruselContainer.appendChild(item);
+            });
+        }
+
+        // Renderizar cuadrícula en el modal
+        function renderizarGrid(temas) {
+            gridContainer.innerHTML = '';
+            if (temas.length === 0) {
+                gridContainer.innerHTML = '<p style="color: #888888; text-align: center;">No hay temas en esta categoría.</p>';
+                return;
+            }
+            temas.forEach(tema => {
+                const item = crearItem(tema, 'grid');
+                gridContainer.appendChild(item);
+            });
+        }
+
+        // Función principal para actualizar la sección "Temas más escuchados"
+        function actualizarTemasMasEscuchados() {
+            const temas = obtenerTemasMasEscuchados();
+            renderizarCarrusel(temas);
+            // Si el modal está abierto, actualizar también la cuadrícula
+            if (modalTodos.classList.contains('visible')) {
+                renderizarGrid(temas);
+            }
+        }
+
+        // ─── EVENTOS DEL MODAL ──────────────────────────────────────────
+
+        verTodosLink.addEventListener('click', () => {
+            const temas = obtenerTemasMasEscuchados();
+            renderizarGrid(temas);
+            modalTodos.classList.add('visible');
+            document.body.style.overflow = 'hidden';
+        });
+
+        cerrarModal.addEventListener('click', () => {
+            modalTodos.classList.remove('visible');
+            document.body.style.overflow = '';
+        });
+
+        modalTodos.addEventListener('click', (e) => {
+            if (e.target === modalTodos) {
+                modalTodos.classList.remove('visible');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // Cerrar con tecla Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modalTodos.classList.contains('visible')) {
+                modalTodos.classList.remove('visible');
+                document.body.style.overflow = '';
+            }
+        });
+
+        // ─── FONDO ALEATORIO ─────────────────────────────────────────────
+        const palette = [
+            '#000000', '#0a0a0a', '#111111', '#050505', 
+            '#0d0d0d', '#080808', '#0f0f0f', '#030303'
+        ];
+
+        function changeBackground() {
+            const color = palette[Math.floor(Math.random() * palette.length)];
+            document.body.style.backgroundColor = color;
+        }
+        setInterval(changeBackground, 3000);
+        changeBackground();
+
+        // ─── AUTENTICACIÓN ──────────────────────────────────────────────
+        onAuthStateChanged(auth, (user) => {
+            console.log(user ? "✅ Usuario autenticado" : "👤 Usuario no autenticado");
+        });
+
+        // ─── INICIO ──────────────────────────────────────────────────────
+        document.addEventListener("DOMContentLoaded", async () => {
+            const promesas = albumes.map(async (album) => {
+                const ref = refs[album.id];
+                const nombreDoc = album.nombre || album.title || album.id;
+                await inicializarDocumento(ref, nombreDoc);
+            });
+            await Promise.all(promesas);
+
+            albumes.forEach(album => {
+                const ref = refs[album.id];
+                const span = spans[album.id];
+                const insignia = insignias[album.id];
+                const nombreDoc = album.nombre || album.title || album.id;
+                escucharContador(ref, span, insignia, nombreDoc, album.id);
+            });
+
+            // Inicializar carrusel con los datos actuales
+            actualizarTemasMasEscuchados();
+
+            // Iniciar actualización de fecha/hora cada segundo
+            setInterval(actualizarFechasHoras, 1000);
+            // Actualizar inmediatamente
+            actualizarFechasHoras();
+
+            listaWrapper.classList.remove('abierto');
+            toggleButton.querySelector('span:first-child').textContent = 'Mostrar todos los temas';
+            flechaToggle.className = 'flecha abajo';
+            listaVisible = false;
+        });
+    </script>
+</body>
+</html>
