@@ -36,7 +36,8 @@
             border: 1px solid rgba(255, 255, 255, 0.06);
         }
 
-        .titulo {
+        /* ---------- TÍTULO PRINCIPAL (renombrado para no chocar con los títulos de las tarjetas) ---------- */
+        .titulo-app {
             text-align: center;
             font-weight: 700;
             font-size: 1.8rem;
@@ -51,7 +52,7 @@
             gap: 12px;
             flex-wrap: wrap;
         }
-        .titulo span {
+        .titulo-app span {
             color: #ffffff;
         }
         .total-global {
@@ -325,7 +326,6 @@
 
         /* ---------- BOTÓN TOGGLE ---------- */
         .toggle-button {
-            display: block;
             margin: 16px auto 12px auto;
             padding: 12px 30px;
             background: rgba(255, 255, 255, 0.06);
@@ -487,7 +487,7 @@
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.05);
         }
 
-        /* ========== NUEVOS ESTILOS PARA CARRUSEL Y CUADRÍCULA ========== */
+        /* ========== CARRUSEL Y CUADRÍCULA ========== */
         .carrusel-section {
             display: none;
             margin: 20px 0 10px;
@@ -500,6 +500,8 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
             margin-bottom: 12px;
         }
         .carrusel-titulo {
@@ -565,6 +567,7 @@
             margin-bottom: 8px;
         }
         .carrusel-item .titulo {
+            display: block;
             font-weight: 600;
             color: #ffffff;
             font-size: 0.9rem;
@@ -641,6 +644,7 @@
             border-radius: 40px;
             transition: background 0.2s;
             line-height: 1;
+            z-index: 2;
         }
         .modal-cerrar:hover {
             background: rgba(255, 255, 255, 0.16);
@@ -681,6 +685,7 @@
             margin-bottom: 8px;
         }
         .grid-item .titulo {
+            display: block;
             font-weight: 600;
             color: #ffffff;
             font-size: 0.9rem;
@@ -713,6 +718,110 @@
             font-size: 0.8rem;
         }
 
+        /* ============================================================
+           ========== NUEVO: GANANCIAS DEL ARTISTA (SOLO AGREGADO) ====
+           ============================================================ */
+        .perfil-ganancias {
+            margin-top: 16px;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 16px;
+        }
+        .perfil-ganancias-titulo {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #888888;
+            letter-spacing: 0.02em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .perfil-ganancias-subtitulo {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #888888;
+            letter-spacing: 0.02em;
+            margin: 14px 0 8px 0;
+            text-transform: uppercase;
+        }
+        .ganancia-total-card {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 12px 18px;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02));
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 14px 20px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35);
+        }
+        .ganancia-total-item {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            min-width: 0;
+        }
+        .ganancia-total-label {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #888888;
+            font-weight: 600;
+        }
+        .ganancia-total-valor {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #ffffff;
+            letter-spacing: -0.5px;
+        }
+        .ganancia-total-valor.dinero {
+            text-shadow: 0 0 22px rgba(255, 255, 255, 0.25);
+        }
+        .perfil-ganancia {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 0;
+            color: #cccccc;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+        }
+        .perfil-ganancia:last-child {
+            border-bottom: none;
+        }
+        .perfil-ganancia-nombre {
+            font-weight: 500;
+            flex: 1;
+            min-width: 0;
+            word-break: break-word;
+        }
+        .perfil-ganancia-detalle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        .perfil-ganancia-repros {
+            font-size: 0.85rem;
+            color: #888888;
+        }
+        .perfil-ganancia-monto {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: #ffffff;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 3px 12px;
+            border-radius: 30px;
+        }
+        .ganancias-nota {
+            font-size: 0.7rem;
+            color: #666666;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+        /* ========== FIN NUEVO: GANANCIAS DEL ARTISTA ========== */
+
         @media (max-width: 480px) {
             .container {
                 padding: 20px 15px;
@@ -735,7 +844,7 @@
                 min-width: 55px;
                 padding: 0 10px;
             }
-            .titulo {
+            .titulo-app {
                 font-size: 1.4rem;
                 flex-direction: column;
                 gap: 6px;
@@ -804,17 +913,40 @@
                 padding: 20px 15px;
             }
         }
+
+        /* ========== NUEVO: ajustes móviles para ganancias ========== */
+        @media (max-width: 480px) {
+            .ganancia-total-card {
+                padding: 12px 14px;
+                gap: 10px;
+            }
+            .ganancia-total-valor {
+                font-size: 1.25rem;
+            }
+            .perfil-ganancia {
+                flex-wrap: wrap;
+                gap: 4px 10px;
+            }
+            .perfil-ganancia-detalle {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .perfil-ganancia-monto {
+                font-size: 0.82rem;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container" id="appContainer">
-        <div class="titulo">
+        <div class="titulo-app">
             <span>Kerim Music+</span>
+            <span class="total-global">Total: <span class="numero" id="totalGlobal">0</span></span>
         </div>
 
         <!-- BUSCADOR -->
         <div class="buscador-wrapper">
-            <input type="text" class="buscador-input" id="buscadorInput" placeholder="Buscar artista (ej. Emsek, J Vazquez, Aiciber)" autocomplete="off" />
+            <input type="text" class="buscador-input" id="buscadorInput" placeholder="Buscar artista (ej. Emsek, J Vazquez, Aizber)" autocomplete="off" />
             <div class="sugerencias" id="sugerenciasLista"></div>
         </div>
 
@@ -834,6 +966,32 @@
                 <div class="perfil-lista-titulo">Canciones</div>
                 <div id="perfilCanciones"></div>
             </div>
+
+            <!-- ============================================================
+                 ========== NUEVO: SECCIÓN DE GANANCIAS (SOLO AGREGADO) ====
+                 ============================================================ -->
+            <div class="perfil-ganancias" id="perfilGanancias">
+                <div class="perfil-ganancias-titulo">💰 Ganancias por reproducciones</div>
+
+                <div class="ganancia-total-card">
+                    <div class="ganancia-total-item">
+                        <span class="ganancia-total-label">Total de reproducciones</span>
+                        <span class="ganancia-total-valor" id="gananciaTotalRepros">0</span>
+                    </div>
+                    <div class="ganancia-total-item">
+                        <span class="ganancia-total-label">Total generado</span>
+                        <span class="ganancia-total-valor dinero" id="gananciaTotalMonto">$0.00 MXN</span>
+                    </div>
+                </div>
+
+                <div class="perfil-ganancias-subtitulo">Desglose por canción</div>
+                <div id="perfilGananciasLista"></div>
+
+                <div class="ganancias-nota">
+                    Tarifa aplicada: $0.50 MXN por cada reproducción válida registrada.
+                </div>
+            </div>
+            <!-- ========== FIN NUEVO: SECCIÓN DE GANANCIAS ========== -->
         </div>
 
         <!-- Tarjeta de álbum destacado (tema más escuchado) -->
@@ -853,7 +1011,7 @@
             </div>
         </div>
 
-        <!-- ========== NUEVA SECCIÓN CARRUSEL TEMAS MÁS ESCUCHADOS ========== -->
+        <!-- ========== SECCIÓN CARRUSEL TEMAS MÁS ESCUCHADOS ========== -->
         <div class="carrusel-section" id="carruselSection">
             <div class="carrusel-header">
                 <span class="carrusel-titulo">🎧 Temas más escuchados</span>
@@ -914,173 +1072,208 @@
 
         const CAMPO = "reproducciones";
 
-        // ─── LISTA DE ÁLBUMES (CON ARTISTA NORMALIZADO) ──────
+        // ─── LISTA DE ÁLBUMES (ARRAY VÁLIDO Y NORMALIZADO) ──────
         const albumes = [
-            //======================Barrio Bajo==================
-            { id: "Se te sube la nota Barrio Bajo", 
-        title: "Se te sube la nota", 
-        artist: "Barrio Bajo", 
-        category: "Rap",
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/zi53xkbpy3ltgf1ztzd62/Se-te-sube-la-nota.png?rlkey=530efmntba6x9g07gra0qm8dr&st=0guanbwd&raw=1',
-        },
-            { id: "Dile Barrio Bajo", 
-        title: "Dile", 
-        artist: "Barrio Bajo", 
-        category: "Rap",
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/qker6uqxmojvnvuuzgzob/Dile.jpg?rlkey=76hsqmpzj3r4ctpexesyehok5&st=offbzalp&raw=1', 
-        },
-        //======================Kerim Msuic==================
-        //=================El placoso de la L=========================
-         { id: "No Te Importo EPDL", 
-        title: "No Te Importo EPDL", 
-        artist: "El placoso de la L", 
-        category: "Rap",
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
-        music: 'https://www.dropbox.com/scl/fi/u81ryisgb72g89ya0md8l/No-Te-Importo-EPDL.wav?rlkey=le8nk4ap3uzoo7uv8yn4yig46&st=ksvr1ckd&raw=1'
-        },
-        { id: "Una Estrella Más EPDL", 
-        title: "Una Estrella Más EPDL", 
-        artist: "El placoso de la L", 
-        category: "Rap",
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
-        music: 'https://www.dropbox.com/scl/fi/xqbo86t3l06pc3xiaekwg/Una-Estrella-M-s-EPDL.wav?rlkey=2dbgpfeogsbwtci26frbvau7p&st=yj9504uy&raw=1'
-        },
-        { id: "Quemen El Toque EPDL", 
-        title: "Qumen el Toque EPDL", 
-        artist: "El placoso de la L", 
-        category: "Rap",
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
-        music: 'https://www.dropbox.com/scl/fi/zmcybg4pe5jdot0nlj1hw/Quemen-El-Toque-EPDL.wav?rlkey=8ea9fwhcc8ydxdpv0cj5v0xvx&st=584gqe3m&raw=1'
-        },
-        { id: "Mi Viejo Me Dijo EPDL", 
-        title: "Mi Viejo Me Dijo EPDL", 
-        artist: "El placoso de la L", 
-        category: "Rap",
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
-        music: 'https://www.dropbox.com/scl/fi/rr0m9gvd0wpdhcvrsjvh8/Mi-Viejo-Me-Dijo-EPDL.wav?rlkey=4lx2qb0thgoxcum0t6z1ud7yh&st=wdn7so5r&raw=1'
-        },
-        { id: "Loco EPDL", 
-        title: "LOCO EPDL", 
-        artist: "El placoso de la L", 
-        category: "Rap",
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1', 
-        music: 'https://www.dropbox.com/scl/fi/addl4wsvy6ez49r30pwwz/Master_L-Klan-Oficial-Loco-Video-Oficial.wav?rlkey=ptxn39acppgeekjfg6x9qtmi3&st=62dp1u6y&raw=1'
-        },
-            //=======================Dany Zm=====================
-        { id: "Dile que tu eres mia Dany Zm", 
-        title: "Dile que tu eres mia", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://i.postimg.cc/wMCFZY9H/Picsart-26-02-15-14-39-19-042.jpg', 
-        },
-        { id: "Hay estare Dany Zm", 
-        title: "Hay estare", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Modo avion Dany Zm", 
-        title: "Modo avion", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Bailalo Dany Zm", 
-        title: "Bailalo", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Beyby Dany Zm", 
-        title: "Beyby", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Corito sano Dany Zm", 
-        title: "Corito sano Dany Zm ft va ft Yerzkor cruz ft Sain Nt", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Especial Dany Zm", 
-        title: "Espacial se acabo cuando", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Tu tiempo se acabo Dany Zm", 
-        title: "Tu tiempo se acabo cuando", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Engaño Dany Zm", 
-        title: "Engaño cuando", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Hasta cuando Dany Zm", 
-        title: "Hasta cuando", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Lluvia Dany Zm", 
-        title: "Lluvia cuento", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Me dejo solo Dany Zm", 
-        title: "Me dejo solo cuento", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Nuestro cuento Dany Zm", 
-        title: "Nuestro cuento", 
-        artist: "Dany Zm", 
-        category: "Rap",
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Vuelve Dany Zm", 
-        title: "Vuelve", 
-        artist: "Dany Zm", 
-        category: "Rap", 
-        coleccion: "Radio_Muisc",
-        url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1', 
-        },
-        { id: "Te extraño tanto Dany Zm", 
-        title: "Te extraño tanto", 
-        artist: "Dany Zm", 
-        category: "Rap",
-        coleccion: "Radio_Muisc", 
-        url: 'https://www.dropbox.com/scl/fi/10taifx84l0e4h2y9l2nx/Te-estra-o-tanto.png?rlkey=kp4gp2kp8rhbzsdobyl5tfng6&st=vrnzzymz&raw=1', 
-        },
-            // =============== Aizber (Artista: Aizber) ==============
-            { 
+            // ==================== Barrio Bajo ====================
+            {
+                id: "Se te sube la nota Barrio Bajo",
+                title: "Se te sube la nota",
+                artist: "Barrio Bajo",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/zi53xkbpy3ltgf1ztzd62/Se-te-sube-la-nota.png?rlkey=530efmntba6x9g07gra0qm8dr&st=0guanbwd&raw=1'
+            },
+            {
+                id: "Dile Barrio Bajo",
+                title: "Dile",
+                artist: "Barrio Bajo",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/qker6uqxmojvnvuuzgzob/Dile.jpg?rlkey=76hsqmpzj3r4ctpexesyehok5&st=offbzalp&raw=1'
+            },
+
+            // ==================== Daniels ====================
+            {
+                id: "En la intimidad Danuels",
+                title: "En la intimidad",
+                artist: "Daniels",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.univision.com/_next/image?url=https%3A%2F%2Fst1.uvnimg.com%2F6d%2F2e%2F14017db64ad78524d9345c1b8476%2FREVIVAL%252520INTERSCOPE%252520RECORDS.jpg&w=550&q=75',
+                music: 'https://www.dropbox.com/scl/fi/fvmn4j26twgsls5qruhx7/en-la-intimidad-l-daniels.mp3?rlkey=zkj3ddoqmpczehqxzx707saol&st=9v36eejh&raw=1'
+            },
+
+            // ==================== El placoso de la L =========================
+            {
+                id: "No Te Importo EPDL",
+                title: "No Te Importo EPDL",
+                artist: "El placoso de la L",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1',
+                music: 'https://www.dropbox.com/scl/fi/u81ryisgb72g89ya0md8l/No-Te-Importo-EPDL.wav?rlkey=le8nk4ap3uzoo7uv8yn4yig46&st=ksvr1ckd&raw=1'
+            },
+            {
+                id: "Una Estrella Más EPDL",
+                title: "Una Estrella Más EPDL",
+                artist: "El placoso de la L",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1',
+                music: 'https://www.dropbox.com/scl/fi/xqbo86t3l06pc3xiaekwg/Una-Estrella-M-s-EPDL.wav?rlkey=2dbgpfeogsbwtci26frbvau7p&st=yj9504uy&raw=1'
+            },
+            {
+                id: "Quemen El Toque EPDL",
+                title: "Qumen el Toque EPDL",
+                artist: "El placoso de la L",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1',
+                music: 'https://www.dropbox.com/scl/fi/zmcybg4pe5jdot0nlj1hw/Quemen-El-Toque-EPDL.wav?rlkey=8ea9fwhcc8ydxdpv0cj5v0xvx&st=584gqe3m&raw=1'
+            },
+            {
+                id: "Mi Viejo Me Dijo EPDL",
+                title: "Mi Viejo Me Dijo EPDL",
+                artist: "El placoso de la L",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1',
+                music: 'https://www.dropbox.com/scl/fi/rr0m9gvd0wpdhcvrsjvh8/Mi-Viejo-Me-Dijo-EPDL.wav?rlkey=4lx2qb0thgoxcum0t6z1ud7yh&st=wdn7so5r&raw=1'
+            },
+            {
+                id: "Loco EPDL",
+                title: "LOCO EPDL",
+                artist: "El placoso de la L",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/otojz7yc0de3xqyb9t6yh/783588703_1047085541468353_6915517615099943137_n.jpg?rlkey=paxdkveuyztjmzbusfupn7sge&st=xx7xwgzw&raw=1',
+                music: 'https://www.dropbox.com/scl/fi/addl4wsvy6ez49r30pwwz/Master_L-Klan-Oficial-Loco-Video-Oficial.wav?rlkey=ptxn39acppgeekjfg6x9qtmi3&st=62dp1u6y&raw=1'
+            },
+
+            // ======================= Dany Zm =====================
+            {
+                id: "Dile que tu eres mia Dany Zm",
+                title: "Dile que tu eres mia",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://i.postimg.cc/wMCFZY9H/Picsart-26-02-15-14-39-19-042.jpg'
+            },
+            {
+                id: "Hay estare Dany Zm",
+                title: "Hay estare",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Modo avion Dany Zm",
+                title: "Modo avion",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Bailalo Dany Zm",
+                title: "Bailalo",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Beyby Dany Zm",
+                title: "Beyby",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Corito sano Dany Zm",
+                title: "Corito sano Dany Zm ft va ft Yerzkor cruz ft Sain Nt",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Especial Dany Zm",
+                title: "Espacial se acabo cuando",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Tu tiempo se acabo Dany Zm",
+                title: "Tu tiempo se acabo cuando",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Engaño Dany Zm",
+                title: "Engaño cuando",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Hasta cuando Dany Zm",
+                title: "Hasta cuando",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Lluvia Dany Zm",
+                title: "Lluvia cuento",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Me dejo solo Dany Zm",
+                title: "Me dejo solo cuento",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Nuestro cuento Dany Zm",
+                title: "Nuestro cuento",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Vuelve Dany Zm",
+                title: "Vuelve",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/xg2e8wg59t1tos2dhn5ji/img.png?rlkey=zl56z2a68tu96n0nxycrz485f&st=79kjdiww&raw=1'
+            },
+            {
+                id: "Te extraño tanto Dany Zm",
+                title: "Te extraño tanto",
+                artist: "Dany Zm",
+                category: "Rap",
+                coleccion: "Radio_Muisc",
+                url: 'https://www.dropbox.com/scl/fi/10taifx84l0e4h2y9l2nx/Te-estra-o-tanto.png?rlkey=kp4gp2kp8rhbzsdobyl5tfng6&st=vrnzzymz&raw=1'
+            },
+
+            // =============== Aizber ==============
+            {
                 id: "Sigo Vivo Aizber",
                 url: 'https://www.dropbox.com/scl/fi/9xqi6k1g5cnbior62dh0l/800x800-7986476-B8AD12F4-560F-4E85-8EE3DD6C45025D0E-0-565367-Picsart260207195632530.jpg?rlkey=zjttay9r0myk8r0h1x2074pnj&st=rqbn5ts8&raw=1',
                 category: 'Rap',
@@ -1089,7 +1282,7 @@
                 coleccion: "Radio_Muisc",
                 artist: 'Aizber'
             },
-            { 
+            {
                 id: "Recuerdos Aizber",
                 url: 'https://www.dropbox.com/scl/fi/kk1f1fdpsgx7noxb5lly9/800x800-7986476-70C18BD7-1A24-4B1E-9D524972181DB7D1-0-663215-FBIMG17490012695773000x3000.jpg?rlkey=0exgl54ffel1k27ncua1j7kd2&st=xwg464eg&raw=1',
                 category: 'Rap',
@@ -1098,6 +1291,7 @@
                 coleccion: "Radio_Muisc",
                 artist: 'Aizber'
             },
+
             // =============== Emsek ==============
             {
                 id: "Entre tus redes Emsek",
@@ -1179,15 +1373,16 @@
                 documento: "Todo acabo Emsek",
                 artist: "Emsek"
             },
-            // =============== JVazquez ==============
-            { 
-        id: "BABY J Vazquez",
-        url: 'https://www.dropbox.com/scl/fi/kfrpspuowtzrkjvwe2kxa/800x800-7986476-EBBCC76E-8564-423A-9B173657F2C27F7C-0-563472-Picsart250629201208586.jpg?rlkey=qglu4yfiepshx5p119dk647du&st=84qnuspr&raw=1',
-        coleccion: "Radio_Muisc",
-        category: 'Reggeton',
-        album: '2019',
-        title: 'BABY J Vazquez',
-        artist: 'J Vazquez'
+
+            // =============== J Vazquez ==============
+            {
+                id: "BABY J Vazquez",
+                url: 'https://www.dropbox.com/scl/fi/kfrpspuowtzrkjvwe2kxa/800x800-7986476-EBBCC76E-8564-423A-9B173657F2C27F7C-0-563472-Picsart250629201208586.jpg?rlkey=qglu4yfiepshx5p119dk647du&st=84qnuspr&raw=1',
+                coleccion: "Radio_Muisc",
+                category: 'Reggeton',
+                album: '2019',
+                title: 'BABY J Vazquez',
+                artist: 'J Vazquez'
             },
             {
                 id: "jvazquez12",
@@ -1309,7 +1504,7 @@
         const flechaToggle = document.getElementById('flechaToggle');
         const totalGlobalSpan = document.getElementById('totalGlobal');
 
-        // ========== NUEVOS ELEMENTOS CARRUSEL Y MODAL ==========
+        // Elementos carrusel y modal
         const carruselSection = document.getElementById('carruselSection');
         const carruselContainer = document.getElementById('carruselContainer');
         const verTodosLink = document.getElementById('verTodosLink');
@@ -1403,7 +1598,6 @@
                 return;
             }
             const ids = data.ids;
-            // Obtener la primera imagen del artista (usar la del primer álbum)
             const primerAlbum = albumes.find(a => a.id === ids[0]);
             const imagen = primerAlbum ? (primerAlbum.imagen || primerAlbum.url || '') : '';
 
@@ -1411,7 +1605,6 @@
             perfilNombre.textContent = artistaNombre;
             perfilArtista.classList.add('visible');
 
-            // Actualizar total y lista de canciones
             actualizarPerfil(artistaNombre);
         }
 
@@ -1432,7 +1625,6 @@
 
             perfilTotal.textContent = total;
 
-            // Mostrar lista de canciones
             perfilCanciones.innerHTML = '';
             canciones.sort((a, b) => b.valor - a.valor);
             canciones.forEach(c => {
@@ -1452,13 +1644,12 @@
             const texto = e.target.value;
             const sugerencias = obtenerSugerencias(texto);
             mostrarSugerencias(sugerencias);
-            // Si el texto coincide exactamente con un artista, mostrar perfil directamente
+
             const exacto = artistasMap.has(texto.trim());
             if (exacto) {
                 mostrarPerfil(texto.trim());
                 sugerenciasLista.classList.remove('visible');
             } else {
-                // Si no hay coincidencia exacta, ocultar perfil
                 perfilArtista.classList.remove('visible');
             }
         });
@@ -1501,6 +1692,7 @@
             const img = document.createElement('img');
             img.src = imagen;
             img.alt = nombre;
+            img.loading = 'lazy';
 
             const info = document.createElement('div');
             info.className = 'info';
@@ -1545,6 +1737,7 @@
                         flechaToggle.className = 'flecha abajo';
                     }
                     buscadorInput.value = artist;
+                    perfilArtista.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
                 }
             });
         });
@@ -1588,7 +1781,7 @@
                     actualizarDestacado();
                     reordenarTarjetas();
                     actualizarTotalGlobal();
-                    actualizarTemasMasEscuchados(); // <-- NUEVO
+                    programarActualizacionTemas();
 
                     if (perfilArtista.classList.contains('visible')) {
                         const artistaActual = perfilNombre.textContent;
@@ -1637,7 +1830,9 @@
             for (const valor of Object.values(valores)) {
                 total += valor;
             }
-            totalGlobalSpan.textContent = total;
+            if (totalGlobalSpan) {
+                totalGlobalSpan.textContent = total.toLocaleString();
+            }
         }
 
         // ─── REORDENAR TARJETAS ──────────────────────────────────────────
@@ -1652,7 +1847,7 @@
             cards.forEach(card => tarjetasContainer.appendChild(card));
         }
 
-        // ========== NUEVAS FUNCIONES: CARRUSEL Y CUADRÍCULA ==========
+        // ========== CARRUSEL Y CUADRÍCULA ==========
 
         // Obtener lista de temas con insignia "mas-escuchado"
         function obtenerTemasMasEscuchados() {
@@ -1673,7 +1868,6 @@
                     }
                 }
             }
-            // Ordenar por reproducciones descendente
             resultado.sort((a, b) => b.valor - a.valor);
             return resultado;
         }
@@ -1686,6 +1880,7 @@
             const img = document.createElement('img');
             img.src = tema.imagen || 'https://via.placeholder.com/160';
             img.alt = tema.nombre;
+            img.loading = 'lazy';
             div.appendChild(img);
 
             const titulo = document.createElement('div');
@@ -1715,17 +1910,16 @@
         function formatearFechaHora(date) {
             const dia = String(date.getDate()).padStart(2, '0');
             const mes = String(date.getMonth() + 1).padStart(2, '0');
-            const año = date.getFullYear();
+            const anio = date.getFullYear();
             const horas = String(date.getHours()).padStart(2, '0');
             const minutos = String(date.getMinutes()).padStart(2, '0');
             const segundos = String(date.getSeconds()).padStart(2, '0');
-            return `${dia}/${mes}/${año} ${horas}:${minutos}:${segundos}`;
+            return `${dia}/${mes}/${anio} ${horas}:${minutos}:${segundos}`;
         }
 
         // Actualizar todos los elementos de fecha/hora (cada segundo)
         function actualizarFechasHoras() {
-            const ahora = new Date();
-            const texto = formatearFechaHora(ahora);
+            const texto = formatearFechaHora(new Date());
             document.querySelectorAll('.fecha-hora-texto').forEach(el => {
                 el.textContent = texto;
             });
@@ -1740,8 +1934,7 @@
             }
             carruselSection.classList.add('visible');
             temas.forEach(tema => {
-                const item = crearItem(tema, 'carrusel');
-                carruselContainer.appendChild(item);
+                carruselContainer.appendChild(crearItem(tema, 'carrusel'));
             });
         }
 
@@ -1753,8 +1946,7 @@
                 return;
             }
             temas.forEach(tema => {
-                const item = crearItem(tema, 'grid');
-                gridContainer.appendChild(item);
+                gridContainer.appendChild(crearItem(tema, 'grid'));
             });
         }
 
@@ -1762,10 +1954,16 @@
         function actualizarTemasMasEscuchados() {
             const temas = obtenerTemasMasEscuchados();
             renderizarCarrusel(temas);
-            // Si el modal está abierto, actualizar también la cuadrícula
             if (modalTodos.classList.contains('visible')) {
                 renderizarGrid(temas);
             }
+        }
+
+        // Debounce para no re-renderizar en cada snapshot (muchos a la vez)
+        let renderTimeout = null;
+        function programarActualizacionTemas() {
+            clearTimeout(renderTimeout);
+            renderTimeout = setTimeout(actualizarTemasMasEscuchados, 150);
         }
 
         // ─── EVENTOS DEL MODAL ──────────────────────────────────────────
@@ -1777,29 +1975,26 @@
             document.body.style.overflow = 'hidden';
         });
 
-        cerrarModal.addEventListener('click', () => {
+        function cerrarModalFn() {
             modalTodos.classList.remove('visible');
             document.body.style.overflow = '';
-        });
+        }
+
+        cerrarModal.addEventListener('click', cerrarModalFn);
 
         modalTodos.addEventListener('click', (e) => {
-            if (e.target === modalTodos) {
-                modalTodos.classList.remove('visible');
-                document.body.style.overflow = '';
-            }
+            if (e.target === modalTodos) cerrarModalFn();
         });
 
-        // Cerrar con tecla Escape
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape' && modalTodos.classList.contains('visible')) {
-                modalTodos.classList.remove('visible');
-                document.body.style.overflow = '';
+                cerrarModalFn();
             }
         });
 
         // ─── FONDO ALEATORIO ─────────────────────────────────────────────
         const palette = [
-            '#000000', '#0a0a0a', '#111111', '#050505', 
+            '#000000', '#0a0a0a', '#111111', '#050505',
             '#0d0d0d', '#080808', '#0f0f0f', '#030303'
         ];
 
@@ -1809,6 +2004,117 @@
         }
         setInterval(changeBackground, 3000);
         changeBackground();
+
+        /* ============================================================
+           ========== NUEVO: GANANCIAS POR REPRODUCCIONES =============
+           ============================================================
+           Bloque 100% nuevo. No modifica ni reemplaza ninguna función
+           existente: solo lee los valores ya registrados en `valores`
+           (que se llenan con los snapshots de Firestore) y los pinta
+           en la nueva sección del perfil del artista. */
+
+        // Tarifa establecida: $0.50 MXN por reproducción válida
+        const TARIFA_POR_REPRODUCCION = 0.50;
+
+        // Elementos nuevos del perfil
+        const gananciaTotalRepros = document.getElementById('gananciaTotalRepros');
+        const gananciaTotalMonto = document.getElementById('gananciaTotalMonto');
+        const perfilGananciasLista = document.getElementById('perfilGananciasLista');
+
+        // Formatea una cantidad como moneda MXN: $1,234.50 MXN
+        function formatearMoneda(cantidad) {
+            const numero = Number(cantidad) || 0;
+            return '$' + numero.toLocaleString('es-MX', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            }) + ' MXN';
+        }
+
+        // Fórmula: reproducciones × $0.50 MXN
+        function calcularGanancia(reproducciones) {
+            const repros = Number(reproducciones) || 0;
+            return repros * TARIFA_POR_REPRODUCCION;
+        }
+
+        // Construye el desglose de ganancias de cada canción del artista
+        function obtenerDesgloseGanancias(artistaNombre) {
+            const data = artistasMap.get(artistaNombre);
+            if (!data) return [];
+
+            return data.ids.map(id => {
+                const album = albumes.find(a => a.id === id);
+                const nombre = album ? (album.nombre || album.title || 'Sin nombre') : 'Sin nombre';
+                const reproducciones = valores[id] || 0;
+                return {
+                    id,
+                    nombre,
+                    reproducciones,
+                    ganancia: calcularGanancia(reproducciones)
+                };
+            });
+        }
+
+        // Pinta en el perfil: total de reproducciones, total generado y desglose
+        function renderizarGananciasPerfil() {
+            if (!gananciaTotalRepros || !gananciaTotalMonto || !perfilGananciasLista) return;
+
+            const artistaNombre = perfilNombre.textContent;
+            const desglose = obtenerDesgloseGanancias(artistaNombre);
+
+            const totalReproducciones = desglose.reduce((acc, c) => acc + c.reproducciones, 0);
+            const totalGanancia = desglose.reduce((acc, c) => acc + c.ganancia, 0);
+
+            gananciaTotalRepros.textContent = totalReproducciones.toLocaleString('es-MX');
+            gananciaTotalMonto.textContent = formatearMoneda(totalGanancia);
+
+            perfilGananciasLista.innerHTML = '';
+
+            // Ordenar de mayor a menor ganancia
+            desglose.sort((a, b) => b.ganancia - a.ganancia);
+
+            desglose.forEach(cancion => {
+                const fila = document.createElement('div');
+                fila.className = 'perfil-ganancia';
+
+                const nombreSpan = document.createElement('span');
+                nombreSpan.className = 'perfil-ganancia-nombre';
+                nombreSpan.textContent = cancion.nombre;
+
+                const detalle = document.createElement('span');
+                detalle.className = 'perfil-ganancia-detalle';
+
+                const reprosSpan = document.createElement('span');
+                reprosSpan.className = 'perfil-ganancia-repros';
+                reprosSpan.textContent = cancion.reproducciones.toLocaleString('es-MX') + ' repros';
+
+                const montoSpan = document.createElement('span');
+                montoSpan.className = 'perfil-ganancia-monto';
+                montoSpan.textContent = formatearMoneda(cancion.ganancia);
+
+                detalle.appendChild(reprosSpan);
+                detalle.appendChild(montoSpan);
+
+                fila.appendChild(nombreSpan);
+                fila.appendChild(detalle);
+
+                perfilGananciasLista.appendChild(fila);
+            });
+        }
+
+        // Enganche automático: cada vez que el perfil del artista se
+        // actualiza (nuevas reproducciones), se recalculan las ganancias.
+        // Se usa un MutationObserver para no tocar las funciones existentes.
+        const observadorGanancias = new MutationObserver(() => {
+            renderizarGananciasPerfil();
+        });
+
+        observadorGanancias.observe(perfilNombre, { childList: true, characterData: true, subtree: true });
+        observadorGanancias.observe(perfilTotal, { childList: true, characterData: true, subtree: true });
+
+        // Primera pintura (perfil aún oculto, pero deja los valores listos)
+        renderizarGananciasPerfil();
+
+        /* ========== FIN NUEVO: GANANCIAS POR REPRODUCCIONES ========== */
 
         // ─── AUTENTICACIÓN ──────────────────────────────────────────────
         onAuthStateChanged(auth, (user) => {
@@ -1837,13 +2143,15 @@
 
             // Iniciar actualización de fecha/hora cada segundo
             setInterval(actualizarFechasHoras, 1000);
-            // Actualizar inmediatamente
             actualizarFechasHoras();
 
             listaWrapper.classList.remove('abierto');
             toggleButton.querySelector('span:first-child').textContent = 'Mostrar todos los temas';
             flechaToggle.className = 'flecha abajo';
             listaVisible = false;
+
+            // NUEVO: primera pintura de ganancias al cargar
+            renderizarGananciasPerfil();
         });
     </script>
 </body>
